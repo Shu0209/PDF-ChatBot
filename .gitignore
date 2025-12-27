@@ -1,0 +1,6 @@
+Data
+research
+.venv
+/src/__pycache__
+.env
+require.txt
