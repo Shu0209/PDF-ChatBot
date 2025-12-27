@@ -1,4 +1,3 @@
-# app.py
 
 from flask import Flask, render_template, request, jsonify, session
 from src.helper import load_pdf_from_bytes, text_split, download_hugging_face_embeddings
@@ -13,13 +12,13 @@ import os
 import uuid
 
 app = Flask(__name__)
-app.secret_key = "super_secret_pdf_chatbot_key_2025"  # Change in production
+app.secret_key = "super_secret_pdf_chatbot_key_2025"  
 
 load_dotenv()
 
-# Environment variables
+
 PINECONE_API_KEY = os.environ.get("PINECONE_API_KEY")
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")  # This is your OpenRouter key
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")  
 
 if not PINECONE_API_KEY or not OPENAI_API_KEY:
     raise ValueError("Please set PINECONE_API_KEY and OPENAI_API_KEY in .env")
@@ -28,10 +27,10 @@ os.environ["PINECONE_API_KEY"] = PINECONE_API_KEY
 
 embeddings = download_hugging_face_embeddings()
 
-index_name = "pdfchatbot"  # One index, multiple namespaces
+index_name = "pdfchatbot" 
 
 llm = ChatOpenAI(
-    model="openai/gpt-oss-120b:free",  # Change to any OpenRouter model
+    model="openai/gpt-oss-120b:free", 
     openai_api_base="https://openrouter.ai/api/v1",
     openai_api_key=OPENAI_API_KEY,
     temperature=0.3,
@@ -46,7 +45,7 @@ prompt = ChatPromptTemplate.from_messages([
 
 @app.route("/")
 def index():
-    session.clear()  # Optional: clear previous session
+    session.clear()  
     return render_template("chat.html")
 
 
@@ -67,7 +66,7 @@ def upload_pdf():
         if len(chunks) == 0:
             return jsonify({"error": "No text could be extracted from the PDF"}), 400
 
-        # Unique namespace per upload
+        
         namespace = str(uuid.uuid4())
         session["namespace"] = namespace
         session["filename"] = file.filename
@@ -126,4 +125,4 @@ def chat():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5050, debug=True)
+    app.run(host="0.0.0.0", port=5050, debug=False)
