@@ -59,6 +59,6 @@ open up localhost:
 
 
 
-Saved URI - 965932217315.dkr.ecr.eu-north-1.amazonaws.com/rag-chatbot
+Saved URI - [965932217315.dkr.ecr.eu-north-1.amazonaws.com/rag-chatbot](http://51.21.198.34:8080/)
 
 
